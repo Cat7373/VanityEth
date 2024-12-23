@@ -1,82 +1,52 @@
 # Vanity Eth
-
 Nodejs based tool to generate vanity ethereum addresses
 
 # Features!
+* Generate multiple addresses
+* Supports Multi-core processors
+* vanity contract address
+* faster, uses less memory, and has more status information than the upstream repository
 
-  - Generate multiple addresses
-  - Supports Multi-core processors
-  - vanity contract address
-  - log to file
-  - checksum based vanity address
-
-### Installation
-```sh
-$ npm install -g vanity-eth
-$ vanityeth -i deadbeef
-```
 ### Examples
-
 Generate ethereum address:
 ```sh
-$ vanityeth
+$ pnpm run start
 ```
 
 generate 10 ethereum addresses:
 ```sh
-$ vanityeth -n 10
+$ pnpm run start -n 10
 ```
 
-generate 10 ethereum addresses with deadbeef as starting characters:
+generate 10 ethereum addresses starting with "dead" and ending with "beef":
 ```sh
-$ vanityeth -n 10 -i deadbeef
+$ pnpm run start -n 10 -p dead -s beef
 ```
-generate 10 ethereum addresses with DEADBEEF as the checksum address (case sensitive):
+
+generate 10 ethereum addresses starting with "dead" and ending with "beef", using 8 threads:
 ```sh
-$ vanityeth -n 10 -i DEADBEEF -c
+$ pnpm run start -n 10 -p dead -s beef -t 8
 ```
+
 generate ethereum address with vanity contract address:
 ```sh
-$ vanityeth -i deadbeef --contract
+$ pnpm run start -p dead -s beef --contract
 ```
-log to file
-```sh
-$ vanityeth -n 10 -l
-```
+
 help me
 ```sh
-$ vanityeth -h
-```
-### Docker usage
-
-Get the image
-```sh
-# Build image locally after cloning repository
-$ docker build -t vanityeth .
-
-# or download image
-docker pull myetherwallet/vanityeth
-```
-
-Usage
-```
-$ docker run -it vanityeth
-
-# Pass additional arguments
-$ docker run -it myetherwallet/vanityeth -i deadbeef
+$ pnpm run start -h
 ```
 
 ### Running Locally
 To run from source:
 ```sh
-git clone git@github.com:MyEtherWallet/VanityEth.git
+git clone git@github.com:Cat7373/VanityEth.git
 cd VanityEth
-npm install
-./index.js
+pnpm install
+pnpm run start
 ```
 
 License
 ----
-
 MIT
-
