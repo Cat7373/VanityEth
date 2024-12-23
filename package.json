@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node built/index.js",
+    "clean": "rm -rf built",
+    "build": "rm -rf built && tsc"
   },
   "repository": {
     "type": "git",
@@ -32,9 +34,14 @@
   },
   "homepage": "https://github.com/MyEtherWallet/VanityEth#readme",
   "dependencies": {
-    "ethereumjs-util": "^7.0.9",
+    "ethereumjs-util": "^7.1.5",
     "hh-mm-ss": "^1.2.0",
-    "ora": "^6.0.1",
-    "yargs": "^17.2.1"
+    "ora": "^8.1.1",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node21": "^21.0.3",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
   }
 }
