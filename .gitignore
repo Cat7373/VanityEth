@@ -38,5 +38,7 @@ jspm_packages
 VanityEth-log*
 
 # ts + pnpm
+package-lock.json
 pnpm-lock.yaml
 built/
+
