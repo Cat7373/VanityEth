@@ -54,7 +54,7 @@ function getDeterministicContractAddress(address: string): string {
   return '0x' + ethUtils
       .keccak256(ethUtils.rlp.encode([address, 0]))
       .subarray(12)
-      .toString("hex")
+      .toString('hex')
 }
 
 /**
@@ -85,8 +85,8 @@ function isValidVanityWallet(wallet: Wallet, prefix: string, suffix: string, isC
  * @returns 获取到的钱包信息
  */
 export async function getVanityWallet(prefix: string, suffix: string, isContract: boolean, counter: (count: number) => void) {
-  if (!isValidHex(prefix)) throw new Error(prefix + " is not valid hexadecimal")
-  if (!isValidHex(suffix)) throw new Error(suffix + " is not valid hexadecimal")
+  if (!isValidHex(prefix)) throw new Error(`${prefix} is not valid hexadecimal`)
+  if (!isValidHex(suffix)) throw new Error(`${suffix} is not valid hexadecimal`)
 
   prefix = prefix.toLowerCase()
   suffix = suffix.toLowerCase()

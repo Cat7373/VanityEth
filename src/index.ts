@@ -8,34 +8,34 @@ import Yargs from 'yargs'
 import process from 'process'
 
 const argv = await Yargs(process.argv.slice(2))
-  .usage("Usage: $0 <command> [options]")
+  .usage('Usage: $0 <command> [options]')
   .example(
-    "$0 -p B00B5",
-    "get a wallet where address prefix matches B00B5",
+    '$0 -p B00B5',
+    'get a wallet where address prefix matches B00B5',
   )
   .example(
-    "$0 --contract -p ABC",
-    "get a wallet where 0 nonce contract address prefix matches the vanity",
+    '$0 --contract -p ABC',
+    'get a wallet where 0 nonce contract address prefix matches the vanity',
   )
-  .example("$0 -n 25 -p ABC -s 123", "get 25 vanity wallets")
-  .example("$0 -n 1000", "get 1000 random wallets")
-  .alias("p", "prefix")
-  .string("p")
-  .describe("p", "prefix hex string")
-  .alias("s", "suffix")
-  .string("s")
-  .describe("s", "suffix hex string")
-  .alias("n", "count")
-  .number("n")
-  .describe("n", "number of wallets")
-  .alias("t", "threads")
-  .number("t")
-  .describe("t", "thread count")
-  .boolean("contract")
-  .describe("contract", "contract address for contract deployment")
-  .help("h")
-  .alias("h", "help")
-  .epilog("copyright 2021")
+  .example('$0 -n 25 -p ABC -s 123', 'get 25 vanity wallets')
+  .example('$0 -n 1000', 'get 1000 random wallets')
+  .alias('p', 'prefix')
+  .string('p')
+  .describe('p', 'prefix hex string')
+  .alias('s', 'suffix')
+  .string('s')
+  .describe('s', 'suffix hex string')
+  .alias('n', 'count')
+  .number('n')
+  .describe('n', 'number of wallets')
+  .alias('t', 'threads')
+  .number('t')
+  .describe('t', 'thread count')
+  .boolean('contract')
+  .describe('contract', 'contract address for contract deployment')
+  .help('h')
+  .alias('h', 'help')
+  .epilog('copyright 2021')
   .argv
 
 if (cluster.isPrimary) { // 主线程处理
@@ -100,7 +100,7 @@ if (cluster.isPrimary) { // 主线程处理
     const proc = cluster.fork(worker_env)
 
     // 处理线程消息
-    proc.on("message", function (message) {
+    proc.on('message', function (message) {
       // 找到地址时
       if (message.account) {
         // 打印出来
@@ -151,6 +151,6 @@ const cleanup = function () {
   process.exit()
 }
 // 出现各类异常情况时，先清理工作线程，再退出
-process.on("exit", cleanup)
-process.on("SIGINT", cleanup)
-process.on("uncaughtException", cleanup)
+process.on('exit', cleanup)
+process.on('SIGINT', cleanup)
+process.on('uncaughtException', cleanup)
