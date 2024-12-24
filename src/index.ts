@@ -118,7 +118,7 @@ if (cluster.isPrimary) { // 主线程处理
         spinner.text = `generating vanity address ${walletsFound + 1} / ${numWallets}`
         spinner.start()
       } else if (message.counter) { // 增加尝试计数
-        totalTry += 1 // TODO 优化一下？
+        totalTry += message.counter
       }
     })
   }
@@ -132,7 +132,7 @@ if (cluster.isPrimary) { // 主线程处理
       worker_env['prefix']!,
       worker_env['suffix']!,
       worker_env['isContract']! === 'true',
-      () => process.send!({ counter: true })
+      (count: number) => process.send!({ counter: count })
     )
 
     process.send!({

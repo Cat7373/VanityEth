@@ -11,7 +11,7 @@ interface Wallet {
 }
 
 // GC 间隔(尝试多少个钱包地址后进行一次)
-const GC_INTERVAL = 6666
+const GC_INTERVAL = 7373
 
 /**
  * 等待一会
@@ -84,24 +84,36 @@ function isValidVanityWallet(wallet: Wallet, prefix: string, suffix: string, isC
  * @param counter 每尝试一个地址，应该调用一次的函数
  * @returns 获取到的钱包信息
  */
-export async function getVanityWallet(prefix: string, suffix: string, isContract: boolean, counter: () => void) {
+export async function getVanityWallet(prefix: string, suffix: string, isContract: boolean, counter: (count: number) => void) {
   if (!isValidHex(prefix)) throw new Error(prefix + " is not valid hexadecimal")
   if (!isValidHex(suffix)) throw new Error(suffix + " is not valid hexadecimal")
 
   prefix = prefix.toLowerCase()
   suffix = suffix.toLowerCase()
 
-  let loopCount = GC_INTERVAL
+  let gcCount = GC_INTERVAL
+  let counterInterval = Math.floor(Math.random() * 937 + 101)
+  let counterCount = counterInterval
 
   let wallet = getRandomWallet()
   while (!isValidVanityWallet(wallet, prefix, suffix, isContract)) {
-    loopCount--
-    if (loopCount <= 0) {
-      await sleep(6)
-      loopCount = GC_INTERVAL
+    // GC
+    gcCount -= 1
+    if (gcCount <= 0) {
+      await sleep(0)
+      gcCount = GC_INTERVAL
     }
 
-    counter()
+    // 向主线程回报数量
+    counterCount -= 1
+    if (counterCount <= 0) {
+      counter(counterInterval)
+
+      counterInterval = Math.floor(Math.random() * 937 + 101)
+      counterCount = counterInterval
+    }
+
+    // 尝试下一个钱包地址
     wallet = getRandomWallet()
   }
 
