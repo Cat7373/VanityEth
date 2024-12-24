@@ -1,11 +1,23 @@
 #! /usr/bin/env node
 
-import { isValidHex, getVanityWallet } from './vanityEth.js'
+import { getVanityWallet } from './vanityEth.js'
 import ora from 'ora'
 import cluster from 'cluster'
 import TimeFormat from 'hh-mm-ss'
 import Yargs from 'yargs'
 import process from 'process'
+
+/**
+ * 判断输入是否为有效的 Hex 字符串
+ * @param input 输入的字符串
+ * @returns 输入是否为有效的 Hex 字符串
+ */
+function isValidHex(input: string): boolean {
+  if (!input.length) return true
+  input = input.toUpperCase()
+  var re = /^[0-9A-F]+$/g
+  return re.test(input)
+}
 
 const argv = await Yargs(process.argv.slice(2))
   .usage('Usage: $0 <command> [options]')
@@ -40,8 +52,8 @@ const argv = await Yargs(process.argv.slice(2))
 
 if (cluster.isPrimary) { // 主线程处理
   // 准备参数
-  const prefix = argv.p ?? ''
-  const suffix = argv.s ?? ''
+  const prefix = (argv.p ?? '').toLowerCase()
+  const suffix = (argv.s ?? '').toLowerCase()
   const numWallets = Math.max(argv.n ?? 1, 1)
   const isContract = argv.contract ?? false
   const threads = argv.t ?? 1
@@ -126,18 +138,15 @@ if (cluster.isPrimary) { // 主线程处理
   // 获取参数
   const worker_env = process.env
 
+  const prefix = worker_env['prefix']!
+  const suffix = worker_env['suffix']!
+  const isContract = worker_env['isContract']! === 'true'
+  const sendCounter = (count: number) => process.send!({ counter: count })
+
   // 循环生成钱包地址
   while (true) {
-    const account = await getVanityWallet(
-      worker_env['prefix']!,
-      worker_env['suffix']!,
-      worker_env['isContract']! === 'true',
-      (count: number) => process.send!({ counter: count })
-    )
-
-    process.send!({
-      account,
-    })
+    const account = await getVanityWallet(prefix, suffix, isContract, sendCounter)
+    process.send!({ account })
   }
 }
 

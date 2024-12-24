@@ -22,18 +22,6 @@ export function sleep(duration: number): Promise<void> {
 }
 
 /**
- * 判断输入是否为有效的 Hex 字符串
- * @param input 输入的字符串
- * @returns 输入是否为有效的 Hex 字符串
- */
-export function isValidHex(input: string): boolean {
-  if (!input.length) return true
-  input = input.toUpperCase()
-  var re = /^[0-9A-F]+$/g
-  return re.test(input)
-}
-
-/**
  * 生成随机钱包地址，并返回其公私钥
  * @returns 钱包的公私钥
  */
@@ -85,12 +73,6 @@ function isValidVanityWallet(wallet: Wallet, prefix: string, suffix: string, isC
  * @returns 获取到的钱包信息
  */
 export async function getVanityWallet(prefix: string, suffix: string, isContract: boolean, counter: (count: number) => void) {
-  if (!isValidHex(prefix)) throw new Error(`${prefix} is not valid hexadecimal`)
-  if (!isValidHex(suffix)) throw new Error(`${suffix} is not valid hexadecimal`)
-
-  prefix = prefix.toLowerCase()
-  suffix = suffix.toLowerCase()
-
   let gcCount = GC_INTERVAL
   let counterInterval = Math.floor(Math.random() * 937 + 101)
   let counterCount = counterInterval
