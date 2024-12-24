@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MyEtherWallet/VanityEth.git"
+    "url": "git+https://github.com/Cat7373/VanityEth.git"
   },
   "keywords": [
     "vanity",
@@ -23,16 +23,19 @@
     {
       "name": "Boris K",
       "url": "https://github.com/bokub"
+    }, {
+      "name": "Cat73",
+      "url": "https://github.com/cat7373"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MyEtherWallet/VanityEth/issues"
+    "url": "https://github.com/Cat7373/VanityEth/issues"
   },
   "bin": {
     "vanityeth": "index.js"
   },
-  "homepage": "https://github.com/MyEtherWallet/VanityEth#readme",
+  "homepage": "https://github.com/Cat7373/VanityEth#readme",
   "dependencies": {
     "ethereumjs-util": "^7.1.5",
     "hh-mm-ss": "^1.2.0",
